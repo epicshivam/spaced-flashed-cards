@@ -1,1 +1,14 @@
+@font-face {
+  font-family: Gloria;
+  src: url("../src/assets/fonts/GloriaHallelujah-Regular.ttf");
+}
+
 @import "tailwindcss";
+
+@theme {
+  --font-gloria: Gloria, "sans-serif";
+}
+
+body {
+  font-family: Gloria;
+}
