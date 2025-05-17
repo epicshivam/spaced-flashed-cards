@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
+  const title = "Spaced Flashed Cards";
   return (
     <motion.div
       initial={{ opacity: 0, y: -50 }}
@@ -11,26 +12,36 @@ const Home = () => {
       transition={{ duration: 0.6 }}
       className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-500 to-indigo-700 flex justify-center items-center"
     >
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-center">
-          <motion.h3
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold mb-6"
-          >
-            😎 Spaced Flashed Cards
-          </motion.h3>
-          <motion.button
-            whileHover={{ scale: 1.1, backgroundColor: "#2563EB" }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-blue-500 text-white text-xl m-4 cursor-pointer border-2 px-6 py-3 rounded-full"
-            onClick={() => navigate("/select")}
-            aria-label="Start learning flashcards"
-          >
-            Lets Learn
-          </motion.button>
+      <div className="text-center px-4">
+        <div className="flex flex-wrap justify-center gap-1 text-4xl md:text-5xl font-bold text-white">
+          {title.split("").map((char, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{
+                scale: 1.2,
+                color: "#FFD700",
+                transition: {
+                  duration: 0.05,
+                  ease: "easeInOut",
+                  type: "tween",
+                },
+              }}
+              className="cursor-default transition-all duration-200"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          ))}
         </div>
+
+        <motion.button
+          onClick={() => navigate("/select")}
+          className="mt-10 bg-yellow-400 text-black px-6 py-3 text-xl rounded-full font-semibold shadow-lg transition transform duration-150 ease-in-out hover:scale-110  hover:bg-yellow-300 cursor-pointer"
+        >
+          Let’s Learn 🚀
+        </motion.button>
       </div>
     </motion.div>
   );
