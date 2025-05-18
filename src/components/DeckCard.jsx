@@ -19,7 +19,7 @@ const DeckCard = ({ id, title, description, image, isActive }) => {
           {description}
         </p>
         <button
-          onClick={() => navigate(`play/${id}`)}
+          onClick={() => navigate(`/play/${id}`)}
           className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded-full shadow hover:bg-yellow-500 transition-colors duration-150 cursor-pointer"
         >
           ▶ Play
