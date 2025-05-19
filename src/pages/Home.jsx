@@ -1,20 +1,27 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // 👈 get current route
   const title = "Spaced Flashed Cards";
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-500 to-indigo-700 flex justify-center items-center relative">
       {/* Blob background */}
       <div className="absolute inset-0 z-0 flex justify-center items-center">
         <svg
+          key={location.pathname} // 👈 force re-render of SVG on route change
           viewBox="0 0 200 200"
           xmlns="http://www.w3.org/2000/svg"
           className="w-[500px] h-[500px]"
         >
-          <path fill="#22D3EE" transform="translate(100 100)">
+          <path
+            key={location.pathname}
+            fill="#22D3EE"
+            transform="translate(100 100)"
+          >
             <animate
               attributeName="d"
               dur="10000ms"

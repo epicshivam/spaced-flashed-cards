@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 
+import clickSound from "../assets/sounds/click.mp3";
+import knowSound from "../assets/sounds/know.mp3";
+import dontKnowSound from "../assets/sounds/dontknow.mp3";
+import flipSound from "../assets/sounds/flip.mp3";
+
+import { useSoundEffect } from "../hooks/useSoundEffect";
+
 const FlashCard = ({ flashcards }) => {
   const { id: deckId } = useParams();
   const navigate = useNavigate();
@@ -13,6 +20,11 @@ const FlashCard = ({ flashcards }) => {
     const saved = localStorage.getItem("flashcardStats");
     return saved ? JSON.parse(saved) : {};
   });
+
+  const playClick = useSoundEffect(clickSound);
+  const playKnow = useSoundEffect(knowSound);
+  const playDontKnow = useSoundEffect(dontKnowSound);
+  const playFlip = useSoundEffect(flipSound);
 
   useEffect(() => {
     localStorage.setItem("flashcardStats", JSON.stringify(stats));
@@ -29,26 +41,30 @@ const FlashCard = ({ flashcards }) => {
   };
 
   const handleKnow = () => {
+    playKnow();
     updateStats("know");
     nextCard();
   };
 
   const handleDontKnow = () => {
+    playDontKnow();
     updateStats("dontKnow");
     nextCard();
   };
 
   const nextCard = () => {
+    playClick();
     setDirection(1);
     setFlipped(false);
     if (index < flashcards.length - 1) {
       setIndex((prev) => prev + 1);
     } else {
-      setFinished(true); // Reached the end
+      setFinished(true);
     }
   };
 
   const prevCard = () => {
+    playClick();
     setDirection(-1);
     setFlipped(false);
     if (index > 0) {
@@ -127,7 +143,10 @@ const FlashCard = ({ flashcards }) => {
                   question={currentCard.question}
                   answer={currentCard.answer}
                   flipped={flipped}
-                  setFlipped={setFlipped}
+                  setFlipped={(val) => {
+                    playFlip();
+                    setFlipped(val);
+                  }}
                 />
               )}
             </motion.div>
